@@ -10,14 +10,6 @@ public class Ticket extends BaseModel{
     private Gate gate ;
     private  Operator operator ;
 
-    public Ticket(String number, Date entryTime, Vehicle vehicle, ParkingSlot parkingSlot, Gate gate, Operator operator) {
-        this.number = number;
-        this.entryTime = entryTime;
-        this.vehicle = vehicle;
-        this.parkingSlot = parkingSlot;
-        this.gate = gate;
-        this.operator = operator;
-    }
 
     public String getNumber() {
         return number;
