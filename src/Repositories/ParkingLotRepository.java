@@ -15,4 +15,8 @@ public class ParkingLotRepository {
 
         throw new ParkingLotNotFoundException() ;
     }
+
+    public void saveParkingLot(ParkingLot parkingLot) {
+        parkingLotMap.put(parkingLot.getId() , parkingLot) ;
+    }
 }

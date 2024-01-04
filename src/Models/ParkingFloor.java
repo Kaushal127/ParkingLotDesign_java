@@ -6,10 +6,6 @@ public class ParkingFloor extends BaseModel{
     private int floorNumber ;
     private List<ParkingSlot> parkingSlots ;
 
-    public ParkingFloor(int floorNumber, List<ParkingSlot> parkingSlots) {
-        this.floorNumber = floorNumber;
-        this.parkingSlots = parkingSlots;
-    }
 
     public int getFloorNumber() {
         return floorNumber;

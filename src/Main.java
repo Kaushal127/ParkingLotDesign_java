@@ -1,32 +1,60 @@
-import Controllers.TicketController;
-import Repositories.GateRepository;
-import Repositories.ParkingLotRepository;
-import Repositories.TicketRepository;
-import Repositories.VehicalRepository;
-import Services.TicketService;
+import Controllers.*;
+import Dtos.IssueTicketRequest;
+import Dtos.IssueTicketResponse;
+import Models.*;
+import Repositories.*;
+import Services.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        /*
-           1. Create gates , floors , parking slots , parking lot
-               option 1 : create controller for all the above
-               option 2 : you can directly call repositories and create them
-           2. just 2 floors , each floor will have only 2 spots . Make it full
-           3. Is issueTicket working fine (it should throw an error )
-           4. Test all the exceptions
-           5. Try to implement few other features along with issue ticket .
-         */
-        GateRepository gateRepository = new GateRepository() ;
-        ParkingLotRepository parkingLotRepository = new ParkingLotRepository() ;
-        TicketRepository ticketRepository = new TicketRepository() ;
+        // Repositories
+        GateRepository gateRepository = new GateRepository();
+        ParkingLotRepository parkingLotRepository = new ParkingLotRepository();
+        TicketRepository ticketRepository = new TicketRepository();
         VehicalRepository vehicalRepository = new VehicalRepository();
+        ParkingFloorRepository parkingFloorRepository = new ParkingFloorRepository();
+        ParkingSlotRepository parkingSlotRepository = new ParkingSlotRepository();
 
-        TicketService ticketService = new TicketService(gateRepository,parkingLotRepository,ticketRepository,vehicalRepository) ;
+        // Services
+        GateService gateService = new GateService(gateRepository);
+        ParkingLotService parkingLotService = new ParkingLotService(parkingLotRepository);
+        ParkingFloorService parkingFloorService = new ParkingFloorService(parkingFloorRepository);
+        ParkingSlotService parkingSlotService = new ParkingSlotService(parkingSlotRepository);
+        TicketService ticketService = new TicketService(gateRepository, parkingLotRepository, ticketRepository, vehicalRepository);
 
-        TicketController ticketController = new TicketController(ticketService) ;
+        // Controllers
+        GateController gateController = new GateController(gateService);
+        ParkingLotController parkingLotController = new ParkingLotController(parkingLotService);
+        ParkingFloorController parkingFloorController = new ParkingFloorController(parkingFloorService);
+        ParkingSlotController parkingSlotController = new ParkingSlotController(parkingSlotService);
+        TicketController ticketController = new TicketController(ticketService);
 
+        // 1. Create gates
+        gateController.createGate(1, GateType.ENTRY, new Operator(1, "John"), GateStatus.ACTIVE);
+        gateController.updateGateStatus(1, GateStatus.ACTIVE);
 
-     }
+        // 2. Create Parking Floors
+        parkingFloorController.createParkingFloor(1);
+        parkingFloorController.createParkingFloor(2);
+
+        // 3. Create Parking slot
+        ParkingFloor floor1 = new ParkingFloor();
+        floor1.setFloorNumber(1);
+        parkingSlotController.createParkingSlot(1,VechicleType.FOUR_WHEELER,ParkingStatus.EMPTY,floor1);
+        parkingSlotController.createParkingSlot(2,VechicleType.FOUR_WHEELER,ParkingStatus.EMPTY,floor1);
+        ParkingFloor floor2 = new ParkingFloor() ;
+        floor2.setFloorNumber(2) ;
+        parkingSlotController.createParkingSlot(3,VechicleType.FOUR_WHEELER ,ParkingStatus.EMPTY ,floor2);
+        parkingSlotController.createParkingSlot(4,VechicleType.FOUR_WHEELER, ParkingStatus.EMPTY ,floor2);
+
+        // 4. Create a parking lot
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLotController.createParkingLot(parkingLot);
+
+        //  5. Issue Ticket
+         IssueTicketRequest validRequest = new IssueTicketRequest(
+                 VechicleType.FOUR_WHEELER , "MH12TY9802","Kaushal", 1l , parkingLot.getId()) ;
+        IssueTicketResponse validTicketResponse = ticketController.issueTicket(validRequest);
+        System.out.println("Scenario 1: " + validTicketResponse.getMessage());
+    }
 }

@@ -1,12 +1,9 @@
 package Models;
 
-import java.util.List;
-
 public class Gate extends BaseModel{
   private int gateNumber ;
   private GateType gateType ;
   private Operator operator ;
-
   private GateStatus gateStatus ;
 
   public Gate(int gateNumber, GateType gateType, Operator operator, GateStatus gateStatus) {

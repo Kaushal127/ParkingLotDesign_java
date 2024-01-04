@@ -7,12 +7,7 @@ public class ParkingSlot extends BaseModel {
     private  int number ;
     private  ParkingFloor floor ;
 
-    public ParkingSlot(VechicleType vechicleType, ParkingStatus parkingStatus, int number, ParkingFloor floor) {
-        this.vechicleType = vechicleType;
-        this.parkingStatus = parkingStatus;
-        this.number = number;
-        this.floor = floor;
-    }
+
 
     public VechicleType getVechicleType() {
         return vechicleType;

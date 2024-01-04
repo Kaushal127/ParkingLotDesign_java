@@ -21,6 +21,10 @@ public class ParkingLot extends BaseModel {
         this.billingStrategy = billingStrategy;
     }
 
+    public ParkingLot() {
+
+    }
+
     public List<ParkingFloor> getFloors() {
         return floors;
     }

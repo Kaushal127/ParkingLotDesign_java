@@ -31,7 +31,6 @@ public class TicketController {
         } catch (ParkingLotFullException e) {
             return new IssueTicketResponse(null , ResponseStatus.FAILURE , PARKING_LOT_FULL) ;
         }
-
         return new IssueTicketResponse(ticket, ResponseStatus.SUCESS,TICKET_ISSUED_MESSAGE) ;
     }
 }
