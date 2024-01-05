@@ -30,14 +30,15 @@ public class Main {
         TicketController ticketController = new TicketController(ticketService);
 
         // 1. Create gates
-        gateController.createGate(1, GateType.ENTRY, new Operator(1, "John"), GateStatus.ACTIVE);
-        gateController.updateGateStatus(1, GateStatus.ACTIVE);
+        Gate entryGate = gateController.createGate(1, GateType.ENTRY, new Operator(1, "John"), GateStatus.ACTIVE);
+        gateController.updateGateStatus(entryGate , GateStatus.ACTIVE);
 
         // 2. Create Parking Floors
         parkingFloorController.createParkingFloor(1);
         parkingFloorController.createParkingFloor(2);
 
         // 3. Create Parking slot
+
         ParkingFloor floor1 = new ParkingFloor();
         floor1.setFloorNumber(1);
         parkingSlotController.createParkingSlot(1,VechicleType.FOUR_WHEELER,ParkingStatus.EMPTY,floor1);
@@ -52,9 +53,22 @@ public class Main {
         parkingLotController.createParkingLot(parkingLot);
 
         //  5. Issue Ticket
+          // Succesful ticket issued
          IssueTicketRequest validRequest = new IssueTicketRequest(
-                 VechicleType.FOUR_WHEELER , "MH12TY9802","Kaushal", 1l , parkingLot.getId()) ;
+                 VechicleType.FOUR_WHEELER , "MH12TY9802","Kaushal", 1l ,1l ) ;
         IssueTicketResponse validTicketResponse = ticketController.issueTicket(validRequest);
         System.out.println("Scenario 1: " + validTicketResponse.getMessage());
+
+          // Gate Not Found
+        IssueTicketRequest invalidGateRequest = new IssueTicketRequest(
+                VechicleType.FOUR_WHEELER, "MH12TY9802", "Kaushal", 999l, 1l);
+        IssueTicketResponse invalidGateResponse = ticketController.issueTicket(invalidGateRequest);
+        System.out.println("Scenario 2: " + invalidGateResponse.getMessage());
+
+         // Parking lot not found
+        IssueTicketRequest invalidParkingLotRequest = new IssueTicketRequest(
+                VechicleType.FOUR_WHEELER, "MH12HK9176", "Kaushal", 1l, 999l);
+        IssueTicketResponse invalidParkingLotResponse = ticketController.issueTicket(invalidParkingLotRequest);
+        System.out.println("Scenario 3: " + invalidParkingLotResponse.getMessage());
     }
 }

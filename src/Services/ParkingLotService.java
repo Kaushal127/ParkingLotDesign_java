@@ -11,6 +11,7 @@ public class  ParkingLotService {
     }
 
     public void createParkingLot(ParkingLot parkingLot) {
+
         parkingLotRepository.saveParkingLot(parkingLot) ;
     }
 }

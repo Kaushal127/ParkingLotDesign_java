@@ -13,18 +13,15 @@ public class GateController {
         this.gateService = gateService ;
     }
 
-    public void createGate(int gateNumber , GateType gateType , Operator operator , GateStatus gateStatus){
-     gateService.createGate(gateNumber,gateType,operator,gateStatus) ;
+    public Gate createGate(int gateNumber , GateType gateType , Operator operator , GateStatus gateStatus){
+     Gate gate = gateService.createGate(gateNumber,gateType,operator,gateStatus) ;
      System.out.println("Gate created Suceesfully : "+gateNumber);
+     return gate ;
   }
 
-    public void updateGateStatus(int gateNumber, GateStatus newStatus) {
-        gateService.updateGateStatus(gateNumber, newStatus);
-        System.out.println("Gate status updated successfully: " + gateNumber);
+    public void updateGateStatus(Gate gate, GateStatus newStatus) {
+        gateService.updateGateStatus(gate , newStatus);
+        System.out.println(gate.getGateNumber() + " Gate status updated successfully to "+ newStatus );
     }
 
-    public Gate gateGateById(Gate gate){
-        gate = gateService.getGateByGateNumber(gate) ;
-        return gate ;
-    }
 }

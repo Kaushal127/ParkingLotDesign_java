@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class ParkingLotRepository {
     Map<Long , ParkingLot> parkingLotMap = new HashMap<>() ;
+    Long prevoiusId = 0l ;
     public ParkingLot getParkingLotById(Long parkingLotId) throws ParkingLotNotFoundException {
         if (parkingLotMap.containsKey(parkingLotId)) {
             parkingLotMap.get(parkingLotId) ;
@@ -17,6 +18,8 @@ public class ParkingLotRepository {
     }
 
     public void saveParkingLot(ParkingLot parkingLot) {
-        parkingLotMap.put(parkingLot.getId() , parkingLot) ;
+        prevoiusId++ ;
+        parkingLot.setId(prevoiusId);
+        parkingLotMap.put(prevoiusId , parkingLot) ;
     }
 }

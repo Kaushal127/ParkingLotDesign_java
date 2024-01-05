@@ -7,11 +7,12 @@ public class Gate extends BaseModel{
   private GateStatus gateStatus ;
 
   public Gate(int gateNumber, GateType gateType, Operator operator, GateStatus gateStatus) {
-    this.gateNumber = gateNumber;
+    this.gateNumber = gateNumber ;
     this.gateType = gateType;
-    this.operator = operator;
-    this.gateStatus = gateStatus;
+    this.operator = operator ;
+    this.gateStatus = gateStatus ;
   }
+
 
   public int getGateNumber() {
     return gateNumber;

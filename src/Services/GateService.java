@@ -13,13 +13,14 @@ public class GateService {
         this.gateRepository = gateRepository ;
     }
 
-    public void createGate(int gateNumber, GateType gateType, Operator operator, GateStatus gateStatus) {
+    public Gate createGate(int gateNumber, GateType gateType, Operator operator, GateStatus gateStatus) {
         Gate gate = new Gate(gateNumber,gateType,operator,gateStatus) ;
         gateRepository.save(gate) ;
+        return gate ;
     }
 
-    public void updateGateStatus(int gateNumber, GateStatus newStatus) {
-        Gate gate = gateRepository.getGateByNumber(gateNumber);
+    public void updateGateStatus(Gate gate , GateStatus newStatus) {
+     //   Gate gate = gateRepository.getGateByNumber(gateNumber);
 
         if (gate != null) {
             gate.setGateStatus(newStatus);
@@ -27,8 +28,4 @@ public class GateService {
         }
     }
 
-    public Gate getGateByGateNumber(Gate gate) {
-        gate = gateRepository.getGateByGateNumber(gate) ;
-        return gate;
-    }
 }
