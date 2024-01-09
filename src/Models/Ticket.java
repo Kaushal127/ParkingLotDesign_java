@@ -7,6 +7,7 @@ public class Ticket extends BaseModel{
     private Date entryTime ;
     private Vehicle vehicle ;
     private ParkingSlot parkingSlot;
+    private ParkingLot parkingLot ;
     private Gate gate ;
     private  Operator operator ;
 
@@ -57,5 +58,13 @@ public class Ticket extends BaseModel{
 
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 }

@@ -23,7 +23,7 @@ public class TicketController {
     public IssueTicketResponse issueTicket(IssueTicketRequest ticketRequest){
         Ticket ticket = null ;
         try {
-            ticketService.issueTicket(ticketRequest) ;
+            ticket = ticketService.issueTicket(ticketRequest) ;
         } catch (GateNotFoundException e) {
             return new IssueTicketResponse(null , ResponseStatus.FAILURE , INVALID_GATE) ;
         } catch (ParkingLotNotFoundException e) {

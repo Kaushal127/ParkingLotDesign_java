@@ -11,7 +11,7 @@ public class ParkingLotRepository {
     Long prevoiusId = 0l ;
     public ParkingLot getParkingLotById(Long parkingLotId) throws ParkingLotNotFoundException {
         if (parkingLotMap.containsKey(parkingLotId)) {
-            parkingLotMap.get(parkingLotId) ;
+            return parkingLotMap.get(parkingLotId) ;
         }
 
         throw new ParkingLotNotFoundException() ;

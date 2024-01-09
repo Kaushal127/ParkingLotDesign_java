@@ -40,13 +40,16 @@ public class TicketService {
         Vehicle vehicle = vehicalRepository.getVehicleForNumber(ticketRequest.getVehicleNumber()) ;
         ticket.setVehicle(vehicle);
 
-        // 3.get parking lot
+        // 3.get parking slot
         ticket.setParkingSlot(getParkingSlot(ticketRequest)) ;
+        // 4.get parking lot
+//        ParkingLot parkingLot = parkingLotRepository.getParkingLotById(ticketRequest.getParkingLotId()) ;
+//        ticket.setParkingLot(parkingLot);
 
-        // 4. ticket number unique
+        // 5. ticket number unique
         ticket.setNumber(ticketRequest.getOwnerName()+ UUID.randomUUID());
 
-        // 5.Save the ticket and return
+        // 6.Save the ticket and return
 
 
         return ticketRepository.save(ticket) ;

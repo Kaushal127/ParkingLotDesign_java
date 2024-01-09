@@ -7,6 +7,9 @@ public class SimpleParkingSlotAllotStrategy implements ParkingPlaceAllotmentStra
 
     @Override
     public ParkingSlot getParkingSlot(VechicleType vechicleType, Long parkingLotId) {
-        return null;
+        ParkingSlot parkingSlot = new ParkingSlot();
+        parkingSlot.setVechicleType(vechicleType);
+
+        return parkingSlot;
     }
 }
