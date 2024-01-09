@@ -4,14 +4,20 @@ import Dtos.IssueTicketResponse;
 import Models.*;
 import Repositories.*;
 import Services.*;
-import Strategies.ParkingPlaceAllotmentStrategy;
-import Strategies.SimpleParkingSlotAllotStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        //setup controllers,services & repositories
+        TicketController ticketController = setupControllers();
+
+        //testcases
+        runTestcases(ticketController);
+    }
+
+    private static TicketController setupControllers() {
         // Repositories
         GateRepository gateRepository = new GateRepository();
         ParkingLotRepository parkingLotRepository = new ParkingLotRepository();
@@ -34,6 +40,12 @@ public class Main {
         ParkingSlotController parkingSlotController = new ParkingSlotController(parkingSlotService);
         TicketController ticketController = new TicketController(ticketService);
 
+        //setup data
+        setupData(gateController, parkingFloorController, parkingSlotController, parkingLotController);
+        return ticketController;
+    }
+
+    private static void setupData(GateController gateController, ParkingFloorController parkingFloorController, ParkingSlotController parkingSlotController, ParkingLotController parkingLotController) {
         // 1. Create gates
         List<Gate> gates = new ArrayList<>() ;
         Gate entryGate = gateController.createGate(1, GateType.ENTRY, new Operator(1, "John"), GateStatus.ACTIVE);
@@ -63,22 +75,24 @@ public class Main {
         parkingLot.setGates(gates);
 
         parkingLot.setParkingLotStatus(ParkingLotStatus.ACTIVE);
+    }
 
+    private static void runTestcases(TicketController ticketController) {
         //  5. Issue Ticket
-          // Succesful ticket issued
-         IssueTicketRequest validRequest = new IssueTicketRequest(
+        // Succesful ticket issued
+        IssueTicketRequest validRequest = new IssueTicketRequest(
                  VechicleType.FOUR_WHEELER , "MH12TY9802","Kaushal", 1l ,1l ) ;
         IssueTicketResponse validTicketResponse = ticketController.issueTicket(validRequest);
         System.out.println("Scenario 1: " + validTicketResponse.getMessage());
         System.out.println("Ticket issued for :" + validRequest.getVechicleType() + " " + validRequest.getVehicleNumber() +" " +validRequest.getOwnerName());
 
-          // Gate Not Found
+        // Gate Not Found
         IssueTicketRequest invalidGateRequest = new IssueTicketRequest(
                 VechicleType.FOUR_WHEELER, "MH12TY9802", "Kaushal", 999l, 1l);
         IssueTicketResponse invalidGateResponse = ticketController.issueTicket(invalidGateRequest);
         System.out.println("Scenario 2: " + invalidGateResponse.getMessage());
 
-         // Parking lot not found
+        // Parking lot not found
         IssueTicketRequest invalidParkingLotRequest = new IssueTicketRequest(
                 VechicleType.FOUR_WHEELER, "MH12HK9176", "Kaushal", 1l, 999l);
         IssueTicketResponse invalidParkingLotResponse = ticketController.issueTicket(invalidParkingLotRequest);
